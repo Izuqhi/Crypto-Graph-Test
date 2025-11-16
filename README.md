@@ -13,10 +13,10 @@ SUPPORTED_COINS = {
     "Ethereum (ETH)": "ethereum",
     "Bitcoin (BTC)": "bitcoin"
 }
-# Set Chart Types
-CHART_TYPES = ["Candlestick", "Line"]
-# URL of where to fetch the data of ongoing markets
-def fetch_data(coin_id):
+    # Set Chart Types
+    CHART_TYPES = ["Candlestick", "Line"]
+    # URL of where to fetch the data of ongoing markets
+    def fetch_data(coin_id):
     url = f"https://api.coingecko.com/api/v3/coins/{coin_id}/market_chart?vs_currency=sgd&days=30"
     response = requests.get(url)
     data = response.json()
