@@ -1,5 +1,5 @@
 # Crypto-Graph-Test
-# Import the required tools
+# Import the required tools (Tkinter used for GUI)
     import tkinter as tk
     from tkinter import ttk
     import requests
@@ -13,6 +13,7 @@
     SUPPORTED_COINS = {
     "Ethereum (ETH)": "ethereum",
     "Bitcoin (BTC)": "bitcoin"}
+    
 # Set Chart Types
     CHART_TYPES = ["Candlestick", "Line"]
     # URL of where to fetch the data of ongoing markets
@@ -50,23 +51,19 @@
     last_price = df['Close'].iloc[-1]
     sma7 = df['SMA_7'].iloc[-1]
     sma21 = df['SMA_21'].iloc[-1]
-
     if sma7 > sma21:
         signal = "BUY 🔼"
     elif sma7 < sma21:
         signal = "SELL 🔽"
     else:
         signal = "HOLD ⚖️"
-
     label_result.config(text=f"{coin_id.upper()} Signal: {signal}\nPrice: S${last_price:,.2f}")
-
     if chart_type == "Candlestick":
         addplots = [
             mpf.make_addplot(df["SMA_7"], color='blue'),
             mpf.make_addplot(df["SMA_21"], color='red'),
             mpf.make_addplot(df["BB_upper"], color='grey'),
-            mpf.make_addplot(df["BB_lower"], color='grey')
-        ]
+            mpf.make_addplot(df["BB_lower"], color='grey')]
         style = mpf.make_mpf_style(base_mpf_style='yahoo', rc={'figure.facecolor': 'white'})
         if save:
             mpf.plot(df, type='candle', style=style, addplot=addplots,
@@ -89,32 +86,30 @@
             plt.savefig(f"{coin_id}_chart.pdf")
         else:
             plt.show()
+    def refresh_chart(save=False):
+        selected_coin = coin_var.get()
+        coin_id = SUPPORTED_COINS[selected_coin]
+        chart_type = chart_var.get()
+        df = fetch_data(coin_id)
+        plot_chart(df, coin_id, chart_type, save)
 
-def refresh_chart(save=False):
-    selected_coin = coin_var.get()
-    coin_id = SUPPORTED_COINS[selected_coin]
-    chart_type = chart_var.get()
-    df = fetch_data(coin_id)
-    plot_chart(df, coin_id, chart_type, save)
+    def save_to_pdf():
+        refresh_chart(save=True)
+        label_result.config(text=label_result.cget("text") + "\n📄 Chart saved to PDF.")
 
-def save_to_pdf():
-    refresh_chart(save=True)
-    label_result.config(text=label_result.cget("text") + "\n📄 Chart saved to PDF.")
+    def auto_refresh_loop():
+        while auto_refresh.get():
+            time.sleep(300)
+            refresh_chart()
 
-def auto_refresh_loop():
-    while auto_refresh.get():
-        time.sleep(300)
-        refresh_chart()
-
-def toggle_auto_refresh():
-    if auto_refresh.get():
-        threading.Thread(target=auto_refresh_loop, daemon=True).start()
+    def toggle_auto_refresh():
+        if auto_refresh.get():
+            threading.Thread(target=auto_refresh_loop, daemon=True).start()
 
 # GUI Setup
 window = tk.Tk()
 window.title("Crypto Dashboard")
 window.geometry("420x350")
-
 label_title = tk.Label(window, text="Crypto Dashboard (SGD)", font=("Arial", 14))
 label_title.pack(pady=10)
 
