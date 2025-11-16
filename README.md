@@ -1,19 +1,20 @@
 # Crypto-Graph-Test
 # Import the required tools
-import tkinter as tk
-from tkinter import ttk
-import requests
-import pandas as pd
-import matplotlib.pyplot as plt
-import mplfinance as mpf
-import threading
-import time
-#Identify the Cryptocurrency to view
-SUPPORTED_COINS = {
+    import tkinter as tk
+    from tkinter import ttk
+    import requests
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import mplfinance as mpf
+    import threading
+    import time
+    
+# Identify the Cryptocurrency to view
+    SUPPORTED_COINS = {
     "Ethereum (ETH)": "ethereum",
     "Bitcoin (BTC)": "bitcoin"
 }
-    # Set Chart Types
+# Set Chart Types
     CHART_TYPES = ["Candlestick", "Line"]
     # URL of where to fetch the data of ongoing markets
     def fetch_data(coin_id):
@@ -31,7 +32,7 @@ SUPPORTED_COINS = {
     df = df[['Open', 'High', 'Low', 'Close', 'Volume']]
     df.dropna(inplace=True)
 
-    # Indicators
+# Indicators
     df['SMA_7'] = df['Close'].rolling(window=7).mean()
     df['SMA_21'] = df['Close'].rolling(window=21).mean()
     df['BB_upper'] = df['Close'].rolling(20).mean() + 2 * df['Close'].rolling(20).std()
@@ -45,8 +46,8 @@ SUPPORTED_COINS = {
     df['RSI'] = 100 - (100 / (1 + rs))
     return df
 
-    # Signals
-def plot_chart(df, coin_id, chart_type, save=False):
+# Signals
+    def plot_chart(df, coin_id, chart_type, save=False):
     last_price = df['Close'].iloc[-1]
     sma7 = df['SMA_7'].iloc[-1]
     sma21 = df['SMA_21'].iloc[-1]
