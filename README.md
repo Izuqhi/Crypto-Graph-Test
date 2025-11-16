@@ -12,8 +12,7 @@
 # Identify the Cryptocurrency to view
     SUPPORTED_COINS = {
     "Ethereum (ETH)": "ethereum",
-    "Bitcoin (BTC)": "bitcoin"
-}
+    "Bitcoin (BTC)": "bitcoin"}
 # Set Chart Types
     CHART_TYPES = ["Candlestick", "Line"]
     # URL of where to fetch the data of ongoing markets
