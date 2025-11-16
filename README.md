@@ -107,33 +107,33 @@
             threading.Thread(target=auto_refresh_loop, daemon=True).start()
 
 # GUI Setup
-window = tk.Tk()
-window.title("Crypto Dashboard")
-window.geometry("420x350")
-label_title = tk.Label(window, text="Crypto Dashboard (SGD)", font=("Arial", 14))
-label_title.pack(pady=10)
+    window = tk.Tk()
+    window.title("Crypto Dashboard")
+    window.geometry("420x350")
+    label_title = tk.Label(window, text="Crypto Dashboard (SGD)", font=("Arial", 14))
+    label_title.pack(pady=10)
 
 # Coin Selector
-coin_var = tk.StringVar(value=list(SUPPORTED_COINS.keys())[0])
-coin_menu = ttk.Combobox(window, textvariable=coin_var, values=list(SUPPORTED_COINS.keys()), state="readonly")
-coin_menu.pack(pady=5)
+    coin_var = tk.StringVar(value=list(SUPPORTED_COINS.keys())[0])
+    coin_menu = ttk.Combobox(window, textvariable=coin_var, values=list(SUPPORTED_COINS.keys()), state="readonly")
+    coin_menu.pack(pady=5)
 
 # Chart Type Selector
-chart_var = tk.StringVar(value=CHART_TYPES[0])
-chart_menu = ttk.Combobox(window, textvariable=chart_var, values=CHART_TYPES, state="readonly")
-chart_menu.pack(pady=5)
+    chart_var = tk.StringVar(value=CHART_TYPES[0])
+    chart_menu = ttk.Combobox(window, textvariable=chart_var, values=CHART_TYPES, state="readonly")
+    chart_menu.pack(pady=5)
 
-label_result = tk.Label(window, text="Click to fetch data...", font=("Arial", 11))
-label_result.pack(pady=10)
+    label_result = tk.Label(window, text="Click to fetch data...", font=("Arial", 11))
+    label_result.pack(pady=10)
 
-btn_refresh = tk.Button(window, text="Show Chart", command=refresh_chart)
-btn_refresh.pack(pady=5)
+    btn_refresh = tk.Button(window, text="Show Chart", command=refresh_chart)
+    btn_refresh.pack(pady=5)
 
-btn_save = tk.Button(window, text="Save Chart to PDF", command=save_to_pdf)
-btn_save.pack(pady=5)
+    btn_save = tk.Button(window, text="Save Chart to PDF", command=save_to_pdf)
+    btn_save.pack(pady=5)
 
-auto_refresh = tk.BooleanVar()
-chk_auto = tk.Checkbutton(window, text="Auto-refresh every 5 min", variable=auto_refresh, command=toggle_auto_refresh)
-chk_auto.pack(pady=5)
+    auto_refresh = tk.BooleanVar()
+    chk_auto = tk.Checkbutton(window, text="Auto-refresh every 5 min", variable=auto_refresh, command=toggle_auto_refresh)
+    chk_auto.pack(pady=5)
 
-window.mainloop()
+    window.mainloop()
